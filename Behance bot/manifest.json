@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Behance Bot",
+  "version": "2.0.0",
+  "description": "This is a simple Behance bot.",
+  "permissions": [
+    "tabs",
+    "scripting",
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://*.behance.net/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Behance Bot"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "lib/tf.min.js",
+        "lib/blazeface.min.js"
+      ],
+      "matches": ["https://*.behance.net/*"]
+    }
+  ]
+}
