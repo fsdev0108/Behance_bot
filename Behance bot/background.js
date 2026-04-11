@@ -1,6 +1,4 @@
 const URLS = [
-  "https://www.behance.net/leyri-rodriguez",
-  "https://www.behance.net/raynell_garcia"
 ];
 
 let workerTabId = null;
