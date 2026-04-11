@@ -90,8 +90,33 @@ async function openProjectForReview(url) {
   const tabId = await openOrReuseTab(url);
   await waitForTabLoaded(tabId);
   await sleep(getRandomDelay(2000, 4000));
+  await input_data(tabId);
 
   console.log("Opened project:", url);
+}
+
+async function input_data(tabId) {
+  const [{ result }] = await chrome.scripting.executeScript({
+    target: { tabId },
+    func: () => {
+      const buttons = document.querySelectorAll('[aria-label="Appreciate"]');
+
+      if (!buttons.length) {
+        return { state: "Error", message: "Buttons not found." };
+      }
+
+      if (buttons.length < 3) {
+        return { state: "Error", message: "Third button not found." };
+      }
+      const btn = buttons[2]; 
+      btn.dispatchEvent(new MouseEvent("mousedown", { bubbles: true })); 
+      btn.dispatchEvent(new MouseEvent("mouseup", { bubbles: true })); 
+      btn.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      return { state: "Success", message: "Element found." };
+    }
+  });
+
+  console.log(result);
 }
 
 async function processProfile(profileUrl) {
